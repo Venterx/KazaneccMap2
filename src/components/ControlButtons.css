@@ -1,0 +1,263 @@
+/* ControlButtons.css */
+
+/* Контейнер для кнопок - СПРАВА */
+.buttons-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* Базовые стили для всех кнопок */
+.control-button {
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 140px;
+ justify-content: flex-start;
+  margin-left: 0;
+}
+
+/* Эффект при наведении */
+.control-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Эффект при нажатии */
+.control-button:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+/* Общие стили для иконок и текста */
+.button-icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+  min-width: 24px;
+  text-align: center;
+}
+
+.button-text {
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.menu-button {
+  background: linear-gradient(135deg, #E84236 0%, #FF7043 100%);
+  color: white;
+  order: 1;
+  margin-left: 0;
+}
+
+/* Состояние при закрытом сайдбаре */
+.menu-button:not(.sidebar-open) {
+  opacity: 1;
+}
+
+/* Состояние при открытом сайдбаре - меняем внешний вид */
+.menu-button.sidebar-open {
+  background: linear-gradient(135deg, #526ED3 0%, #70B6F6 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(82, 110, 211, 0.3);
+  margin-left: 0;
+}
+
+/* Анимация иконки меню */
+.menu-button:not(.sidebar-open) .button-icon {
+  animation: gentlePulse 3s infinite;
+}
+
+.menu-button.sidebar-open .button-icon {
+  transform: rotate(90deg);
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ========== КНОПКА НАСТРОЕК (нижняя) ========== */
+.settings-button {
+  background: linear-gradient(135deg, #526ED3 0%, #70B6F6 100%);
+  color: white;
+  order: 2;
+  margin-left: 0;
+}
+
+/* Состояние при закрытых настройках */
+.settings-button:not(.controls-open) {
+  opacity: 1;
+}
+
+/* Состояние при открытых настройках */
+.settings-button.controls-open {
+  background: linear-gradient(135deg, #4AC99B 0%, #70F6D8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 201, 155, 0.3);
+  margin-left: 0;
+}
+
+/* Убираем анимацию иконки настроек */
+.settings-button:not(.controls-open) .button-icon {
+  animation: none;
+}
+
+.settings-button.controls-open .button-icon {
+  transform: none;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 768px) {
+  .buttons-container {
+    top: 15px;
+    right: 15px;
+    gap: 8px;
+  }
+  
+  .control-button {
+    padding: 10px 16px;
+    font-size: 14px;
+    min-width: 120px;
+  }
+  
+  .button-icon {
+    font-size: 18px;
+    min-width: 20px;
+  }
+  
+  /* На мобильных скрываем текст, оставляем только иконки */
+  @media (max-width: 480px) {
+    .button-text {
+      display: none;
+    }
+    
+    .control-button {
+      min-width: auto;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .buttons-container {
+      gap: 6px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .buttons-container {
+    right: 10px;
+    top: 10px;
+  }
+}
+
+/* ========== ПРОСТЫЕ ЭФФЕКТЫ БЕЗ БЕЛОЙ АНИМАЦИИ ========== */
+
+/* Индикатор активного состояния - простой */
+.control-button {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Эффект затемнения при нажатии */
+.control-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.control-button:active::after {
+  opacity: 1;
+}
+
+/* Подсветка текста при hover */
+.control-button:hover .button-text {
+  transform: translateX(2px);
+}
+
+/* Плавное появление при загрузке */
+@keyframes simpleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-button {
+  animation: simpleFadeIn 0.5s ease-out 0.1s both;
+}
+
+.settings-button {
+  animation: simpleFadeIn 0.5s ease-out 0.2s both;
+}
+
+/* Градиентная обводка при hover */
+.control-button {
+  position: relative;
+  z-index: 1;
+}
+
+.control-button::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    rgba(232, 66, 54, 0.3), 
+    rgba(82, 110, 211, 0.3), 
+    rgba(74, 201, 155, 0.3));
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.control-button:hover::before {
+  opacity: 1;
+}
+
+/* Для активных состояний убираем градиент */
+.menu-button.sidebar-open::before,
+.settings-button.controls-open::before {
+  opacity: 0;
+}
+
+/* Убираем эффект нажатия */
+.control-button:active {
+  transform: scale(1);
+}
